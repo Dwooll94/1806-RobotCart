@@ -17,7 +17,7 @@ FireAnimation enableAnimation(0.7, 0.7, LED_COUNT, 0.8, 0.6, false, 0);
 StrobeAnimation estopAnimation(255, 0, 0, 128, 0.7, LED_COUNT);
 
 RGBs::RGBs():
-    candle(0)
+    candle(0), mFestiveAnimation(1, 20, LED_COUNT, 4)
 {
     CANdleConfiguration configAll {};
     configAll.statusLedOffWhenActive = true;
@@ -148,6 +148,11 @@ void RGBs::StartAnimationFromControlStruct(RGBControlStruct controlStruct, bool 
                 candle.Animate(toa, 0);
             break;
             }
+            case RGBAnimationType::Festive:
+            {
+                candle.ClearAnimation(0);
+                mFestiveAnimation.update(candle);
+            }
         }
     }
     else
@@ -186,4 +191,11 @@ void RGBs::EStopCart()
     candle.Animate(estopAnimation, 0);
 }
 
+void RGBs::updateActiveCustomAnimations(RGBControlStruct controlStruct)
+{
+    if(controlStruct.override && (controlStruct.animationType == RGBAnimationType::Festive))
+    {
+        mFestiveAnimation.update(candle);
+    }
+}
 

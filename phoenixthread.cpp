@@ -304,4 +304,5 @@ void PhoenixThread::updateRGBs()
             rgbs.EStopCart();
         }
     }
+    rgbs.updateActiveCustomAnimations(rgbControl);
 }

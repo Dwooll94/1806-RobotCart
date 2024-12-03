@@ -40,6 +40,8 @@ set(PROJECT_SOURCES
         RGBControlStruct.h
         rgbfilemanager.h
         rgbfilemanager.cpp
+        festiveanimation.h
+        festiveanimation.cpp
         ${TS_FILES}
 )
 

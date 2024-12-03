@@ -13,7 +13,8 @@ enum RGBAnimationType{
     SingleFade,
     Strobe,
     Twinkle,
-    TwinkleOff
+    TwinkleOff,
+    Festive
 };
 
 struct RGBControlStruct

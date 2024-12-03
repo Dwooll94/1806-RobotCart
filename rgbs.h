@@ -4,6 +4,7 @@
 
 #include "ctre/Phoenix.h"
 #include "RGBControlStruct.h"
+#include "festiveanimation.h"
 
 class RGBs
 {
@@ -14,9 +15,13 @@ public:
     void DisableCart();
     void EStopCart();
 
+    void updateActiveCustomAnimations(RGBControlStruct controlStruct);
 private:
     CANdle candle;
     bool override;
+
+    FestiveAnimation mFestiveAnimation;
+
 
 };
 

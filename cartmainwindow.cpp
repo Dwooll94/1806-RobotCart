@@ -109,6 +109,7 @@ void CartMainWindow::setupRGBOptions()
     box->addItem("Strobe", QVariant::fromValue(RGBAnimationType::Strobe));
     box->addItem("Twinkle", QVariant::fromValue(RGBAnimationType::Twinkle));
     box->addItem("TwinkleOff", QVariant::fromValue(RGBAnimationType::TwinkleOff));
+    box->addItem("Festive", QVariant::fromValue(RGBAnimationType::Festive));
     rgbControl.twinklePercent = 6;
 }
 
