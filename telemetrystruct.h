@@ -7,6 +7,7 @@ struct Telemetry
     //overall
     double totalPowerWatts;
     double voltage;
+    double canUtilization;
 
     //drive
     double leftDriveDutyCycle;
@@ -17,11 +18,14 @@ struct Telemetry
     double rightFrontAmps;
     double rightMidAmps;
     double rightRearAmps;
+    double driveMultiplier;
 
     //lift
     double liftDutyCycle;
     double liftLeftAmps;
     double liftRightAmps;
+
+
 
 };
 

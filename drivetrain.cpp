@@ -16,6 +16,22 @@ Drivetrain::Drivetrain():
     rightRear.Follow(rightFront);
 
     setNeutralMode(NeutralMode::Brake);
+
+    leftFront.ConfigOpenloopRamp(0, 10);
+    leftMid.ConfigOpenloopRamp(0, 10);
+    leftRear.ConfigOpenloopRamp(0, 10);
+
+    rightFront.ConfigOpenloopRamp(0, 10);
+    rightMid.ConfigOpenloopRamp(0, 10);
+    rightRear.ConfigOpenloopRamp(0, 10);
+
+    leftFront.ConfigPeakCurrentLimit(0, 10);
+    leftMid.ConfigPeakCurrentLimit(0, 10);
+    leftRear.ConfigPeakCurrentLimit(0, 10);
+
+    rightFront.ConfigPeakCurrentLimit(0, 10);
+    rightMid.ConfigPeakCurrentLimit(0, 10);
+    rightRear.ConfigPeakCurrentLimit(0, 10);
 }
 
 void Drivetrain::CheesyDrive(double throttle, double steering, bool turnInPlace)
@@ -39,13 +55,29 @@ void Drivetrain::SetCurrentLimit(double newCurrentLimit)
     rightMid.EnableCurrentLimit(true);
     rightRear.EnableCurrentLimit(true);
 
-    leftFront.ConfigContinuousCurrentLimit(newCurrentLimit, 10);
-    leftMid.ConfigContinuousCurrentLimit(newCurrentLimit, 10);
-    leftRear.ConfigContinuousCurrentLimit(newCurrentLimit, 10);
+    leftFront.ConfigContinuousCurrentLimit(newCurrentLimit/4.0, 10);
+    leftMid.ConfigContinuousCurrentLimit(newCurrentLimit/4.0, 10);
+    leftRear.ConfigContinuousCurrentLimit(newCurrentLimit/4.0, 10);
 
-    rightFront.ConfigContinuousCurrentLimit(newCurrentLimit, 10);
-    rightMid.ConfigContinuousCurrentLimit(newCurrentLimit, 10);
-    rightRear.ConfigContinuousCurrentLimit(newCurrentLimit, 10);
+    leftFront.ConfigPeakCurrentLimit(newCurrentLimit, 10);
+    leftMid.ConfigPeakCurrentLimit(newCurrentLimit, 10);
+    leftRear.ConfigPeakCurrentLimit(newCurrentLimit, 10);
+    leftFront.ConfigPeakCurrentDuration(50, 10);
+    leftMid.ConfigPeakCurrentDuration(50,10);
+    leftRear.ConfigPeakCurrentDuration(50, 10);
+
+    rightFront.ConfigContinuousCurrentLimit(newCurrentLimit/4.0, 10);
+    rightMid.ConfigContinuousCurrentLimit(newCurrentLimit/4.0, 10);
+    rightRear.ConfigContinuousCurrentLimit(newCurrentLimit/4.0, 10);
+
+    rightFront.ConfigPeakCurrentLimit(newCurrentLimit, 10);
+    rightMid.ConfigPeakCurrentLimit(newCurrentLimit, 10);
+    rightRear.ConfigPeakCurrentLimit(newCurrentLimit, 10);
+
+    rightFront.ConfigPeakCurrentDuration(50,10);
+    rightMid.ConfigPeakCurrentDuration(50,10);
+    rightRear.ConfigPeakCurrentDuration(50,10);
+
 
     rightFront.SetInverted(true);
 }

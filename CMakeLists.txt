@@ -11,6 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
+find_package(phoenix6 REQUIRED)
 find_package (Threads REQUIRED)
 find_package(SDL2 REQUIRED)
 
@@ -42,6 +43,7 @@ set(PROJECT_SOURCES
         rgbfilemanager.cpp
         festiveanimation.h
         festiveanimation.cpp
+        resources.qrc
         ${TS_FILES}
 )
 
@@ -72,8 +74,6 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-
-
 if (${CMAKE_LIBRARY_ARCHITECTURE} STREQUAL "arm-linux-gnueabihf") # Jetson TK1 / Pi
     set(PHOENIX_LIBS_DIR ${CMAKE_SOURCE_DIR}/lib/arm32)
 elseif (${CMAKE_LIBRARY_ARCHITECTURE} STREQUAL "aarch64-linux-gnu") # Jetson TX2
@@ -87,7 +87,8 @@ target_link_libraries(1806-RobotCart PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
                                                 ${PHOENIX_LIBS_DIR}/libCTRE_PhoenixCCI.so
                                                 ${PHOENIX_LIBS_DIR}/libCTRE_PhoenixTools.so
                                                 ${SDL2_LIBRARIES}
-                                                Threads::Threads)
+                                                Threads::Threads
+                                                phoenix6)
 
 
 set_target_properties(1806-RobotCart PROPERTIES

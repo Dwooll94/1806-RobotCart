@@ -178,11 +178,16 @@ void CartMainWindow::readTelemetry()
     ui->rightMidAmpsLCD->display(telemetry.rightMidAmps);
     ui->rightRearAmpsLCD->display(telemetry.rightRearAmps);
 
+    ui->liftLeftAmpsLCD->display(telemetry.liftLeftAmps);
+    ui->liftRightAmpsLCD->display(telemetry.liftRightAmps);
+
     ui->liftPowerProgressBar->setValue(telemetry.liftDutyCycle * 1000.0);
 
     ui->powerOutputBar->setValue(telemetry.totalPowerWatts);
 
+    ui->lcdCanUtil->display(telemetry.canUtilization * 100.0);
 
+    ui->driveMultiplier->setValue(telemetry.driveMultiplier * 1000.0);
 }
 void CartMainWindow::setDisabled()
 {
@@ -437,5 +442,12 @@ void CartMainWindow::populateRgbUiFromCurrentStruct()
     {
         std::cout << "Could not find twinkle percent in combo box" << std::endl;
     }
+}
+
+
+void CartMainWindow::on_liftCurrentLimitDial_valueChanged(int value)
+{
+    currentLimits.LiftCurrentLimit = value;
+    postCurrentLimits();
 }
 

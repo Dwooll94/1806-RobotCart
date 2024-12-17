@@ -11,10 +11,11 @@
 #include "ctre/phoenix/led/TwinkleOffAnimation.h"
 #include <iostream>
 
-const int LED_COUNT = 190;
-ColorFlowAnimation disableAnimation(25, 255, 0, 192, 0.5, LED_COUNT, ColorFlowAnimation::Direction::Forward);
-FireAnimation enableAnimation(0.7, 0.7, LED_COUNT, 0.8, 0.6, false, 0);
-StrobeAnimation estopAnimation(255, 0, 0, 128, 0.7, LED_COUNT);
+const int LED_COUNT = 308;
+TwinkleAnimation disableAnimation(25, 255, 0, 128, 0.2, LED_COUNT, TwinkleAnimation::TwinklePercent::Percent88);
+ColorFlowAnimation enableAnimation(255, 255, 255, 255, 0.8, LED_COUNT, ColorFlowAnimation::Direction::Forward);
+//FireAnimation enableAnimation(0.7, 0.7, LED_COUNT, 0.8, 0.6, false, 0);
+StrobeAnimation estopAnimation(255, 0, 0, 128, 0.2, LED_COUNT);
 
 RGBs::RGBs():
     candle(0), mFestiveAnimation(1, 20, LED_COUNT, 4)

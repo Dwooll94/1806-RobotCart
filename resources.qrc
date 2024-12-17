@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/swat">
+        <file>swat.png</file>
+        <file>swat_stamp-black.png</file>
+        <file>swat_stamp-invert.png</file>
+        <file>1806.png</file>
+    </qresource>
+</RCC>

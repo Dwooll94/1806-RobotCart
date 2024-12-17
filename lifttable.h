@@ -23,7 +23,7 @@ public:
     void SetNeutralMode(NeutralMode newMode);
 private:
 
-    VictorSPX liftLeft, liftRight;
+    TalonSRX liftLeft, liftRight;
 };
 
 #endif // LIFTTABLE_H

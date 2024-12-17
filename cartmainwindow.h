@@ -80,6 +80,8 @@ private slots:
 
     void on_saveRGBToFile_clicked();
 
+    void on_liftCurrentLimitDial_valueChanged(int value);
+
 private:
 
     void setupRGBOptions();

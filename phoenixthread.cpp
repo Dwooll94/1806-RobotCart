@@ -2,6 +2,7 @@
 #include "ctre/Phoenix.h"
 #include "ctre/phoenix/platform/Platform.hpp"
 #include "ctre/phoenix/unmanaged/Unmanaged.h"
+#include <ctre/phoenix6/CANBus.hpp>
 #include <chrono>
 #include <iostream>
 #include <string>
@@ -54,6 +55,8 @@ void PhoenixThread::run()
     liftTable.Stop();
     drivetrain.setNeutralMode(currentLimits.driveBrake?NeutralMode::Brake:NeutralMode::Coast);
     liftTable.SetNeutralMode((currentLimits.liftBrake?NeutralMode::Brake:NeutralMode::Coast));
+    drivetrain.SetCurrentLimit(currentLimits.DriveCurrentLimit);
+    liftTable.SetCurrentLimit(currentLimits.LiftCurrentLimit);
     rgbs.StartAnimationFromControlStruct(rgbControl, false);
     rgbs.DisableCart();
     updateRGBs();
@@ -163,17 +166,22 @@ void PhoenixThread::run()
                 /* grab some stick values */
                 double y = ((double)SDL_JoystickGetAxis(joy, 1)) / -32767.0;
                 double turn = ((double)SDL_JoystickGetAxis(joy, 0)) / 32767.0;
+                double driveMultiplier = (((-(double)SDL_JoystickGetAxis(joy, 3))+32767.0)) / (32767.0*2);
+
                 bool quickTurn = SDL_JoystickGetButton(joy, 1) > 0;
                 bool driveEnable = SDL_JoystickGetButton(joy, 0) > 0;
+
                 bool liftUp = SDL_JoystickGetButton(joy, 6) > 0;
                 bool liftDown = SDL_JoystickGetButton(joy, 7) > 0;
 
                 y = handleDeadZone(y);
                 turn = handleDeadZone(turn);
 
+                telemetry.driveMultiplier = driveMultiplier;
+
                 if(driveEnable && robotState.driveEnable)
                 {
-                    drivetrain.CheesyDrive(y, turn, quickTurn);
+                    drivetrain.CheesyDrive(y * driveMultiplier, turn * driveMultiplier, quickTurn);
                 }
                 else
                 {
@@ -197,6 +205,7 @@ void PhoenixThread::run()
                 telemetry.totalPowerWatts = 0.0;
                 drivetrain.updateTelemetry(telemetry);
                 liftTable.UpdateTelemetry(telemetry);
+                telemetry.canUtilization = ctre::phoenix6::CANBus::GetStatus(MAIN_CAN_BUS).BusUtilization;
 
                 writeSharedMemory();
                 /* loop yield for a bit */
