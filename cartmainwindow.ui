@@ -1337,9 +1337,9 @@ QSlider::handle:horizontal{
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>290</y>
+      <y>320</y>
       <width>461</width>
-      <height>141</height>
+      <height>111</height>
      </rect>
     </property>
     <property name="font">
@@ -1489,6 +1489,35 @@ QSlider::handle:horizontal{
     </property>
     <property name="text">
      <string>E-STOP SLIDE RIGHT</string>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="runningHoursDisplay">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>290</y>
+      <width>161</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="digitCount">
+     <number>14</number>
+    </property>
+    <property name="value" stdset="0">
+     <double>18.059999999999999</double>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_13">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>290</y>
+      <width>91</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Hours Enabled</string>
     </property>
    </widget>
   </widget>

@@ -23,6 +23,7 @@ CartMainWindow::CartMainWindow(QWidget *parent)
     , sharedTelemetry(SharedMemoryKeys::TELEMETRY_KEY)
     , sharedCurrentLimits(SharedMemoryKeys::CURRENT_LIMITS_KEY)
     , sharedRGBControl(SharedMemoryKeys::RGB_CONTROL_KEY)
+    , enableTimeTracker()
 {
 
     if(!sharedRobotState.create(sizeof(robotState)))
@@ -62,7 +63,6 @@ CartMainWindow::CartMainWindow(QWidget *parent)
 
 
     std::cout<< "Loading Default Current Limits" << std::endl;
-    //TODO: Load Defaults
     currentLimits.DriveCurrentLimit = ui->driveCurrentLimit->value();
     currentLimits.LiftCurrentLimit = ui->liftCurrentLimitDial->value();
     currentLimits.driveBrake = true;
@@ -95,6 +95,12 @@ CartMainWindow::CartMainWindow(QWidget *parent)
    QTimer *timer = new QTimer(this);
    connect(timer, SIGNAL(timeout()), this, SLOT(readTelemetry()));
    timer->start(100);
+
+
+   ui->runningHoursDisplay->display(round(enableTimeTracker.getHoursEnabled() * 100.0)/100.0);
+   QTimer *timerEnable = new QTimer(this);
+   connect(timerEnable, SIGNAL(timeout()), this, SLOT(updateEnableTracker()));
+   timerEnable->start(5000);
 }
 
 void CartMainWindow::setupRGBOptions()
@@ -188,6 +194,20 @@ void CartMainWindow::readTelemetry()
     ui->lcdCanUtil->display(telemetry.canUtilization * 100.0);
 
     ui->driveMultiplier->setValue(telemetry.driveMultiplier * 1000.0);
+}
+
+void CartMainWindow::updateEnableTracker()
+{
+    if(robotState.currentRobotState == RobotState::Enabled)
+    {
+        timeSinceLastEnableWriteSecs += 5.0;
+        if(timeSinceLastEnableWriteSecs >= 30.0)
+        {
+            enableTimeTracker.log30SecsEnabled();
+            timeSinceLastEnableWriteSecs = 0;
+        }
+    }
+    ui->runningHoursDisplay->display(round(enableTimeTracker.getHoursEnabled() * 100.0)/100.0);
 }
 void CartMainWindow::setDisabled()
 {

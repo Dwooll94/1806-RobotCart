@@ -44,6 +44,8 @@ set(PROJECT_SOURCES
         festiveanimation.h
         festiveanimation.cpp
         resources.qrc
+        enabletimetracker.h
+        enabletimetracker.cpp
         ${TS_FILES}
 )
 

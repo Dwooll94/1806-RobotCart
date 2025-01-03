@@ -9,6 +9,8 @@
 #include "RGBControlStruct.h"
 #include "phoenixthread.h"
 #include "rgbfilemanager.h"
+#include "enabletimetracker.h"
+#include <time.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class CartMainWindow; }
@@ -34,6 +36,8 @@ private slots:
     void on_driveCurrentLimit_valueChanged(int value);
 
     void readTelemetry();
+
+    void updateEnableTracker();
 
     void on_driveBrakeBox_stateChanged(int arg1);
 
@@ -99,6 +103,9 @@ private:
     CurrentLimits currentLimits;
     RGBControlStruct rgbControl;
 
+    EnableTimeTracker enableTimeTracker;
+    double timeSinceLastEnableWriteSecs = 0;
+
     void postRobotStateUpdate();
     void postTelemetry();
     void postCurrentLimits();
@@ -110,6 +117,5 @@ private:
 
     void setDisabled();
     void setEnabled();
-
 };
 #endif // CARTMAINWINDOW_H
